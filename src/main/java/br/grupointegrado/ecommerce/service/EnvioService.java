@@ -17,10 +17,6 @@ public class EnvioService {
         return envioRepository.findAll();
     }
 
-    public Envio findById(Long id) {
-        return envioRepository.findById(id).orElse(null);
-    }
-
     public Envio save(Envio envio) {
         return envioRepository.save(envio);
     }

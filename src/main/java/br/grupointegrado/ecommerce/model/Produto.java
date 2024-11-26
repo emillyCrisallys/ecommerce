@@ -1,15 +1,20 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
 @Entity
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
     private String nome;
-    private Double preco;
+
+    @NotNull
+    private BigDecimal preco;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -19,9 +24,6 @@ public class Produto {
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
-    @ManyToMany(mappedBy = "produtos")
-    private List<Carrinho> carrinhos;
-
     public Long getId() {
         return id;
     }
@@ -30,19 +32,19 @@ public class Produto {
         this.id = id;
     }
 
-    public String getNome() {
+    public @NotNull String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NotNull String nome) {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public @NotNull BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(@NotNull BigDecimal preco) {
         this.preco = preco;
     }
 
@@ -60,13 +62,5 @@ public class Produto {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
-    }
-
-    public List<Carrinho> getCarrinhos() {
-        return carrinhos;
-    }
-
-    public void setCarrinhos(List<Carrinho> carrinhos) {
-        this.carrinhos = carrinhos;
     }
 }

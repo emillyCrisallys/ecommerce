@@ -1,6 +1,7 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Envio {
@@ -8,13 +9,15 @@ public class Envio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
+    @NotNull
     private String enderecoEntrega;
-    private String statusEntrega;
 
+    @NotNull
+    private String statusEntrega;
 
     public Long getId() {
         return id;
@@ -32,19 +35,19 @@ public class Envio {
         this.pedido = pedido;
     }
 
-    public String getEnderecoEntrega() {
+    public @NotNull String getEnderecoEntrega() {
         return enderecoEntrega;
     }
 
-    public void setEnderecoEntrega(String enderecoEntrega) {
+    public void setEnderecoEntrega(@NotNull String enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
     }
 
-    public String getStatusEntrega() {
+    public @NotNull String getStatusEntrega() {
         return statusEntrega;
     }
 
-    public void setStatusEntrega(String statusEntrega) {
+    public void setStatusEntrega(@NotNull String statusEntrega) {
         this.statusEntrega = statusEntrega;
     }
 }

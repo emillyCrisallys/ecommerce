@@ -16,10 +16,6 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
-    public Categoria findById(Long id) {
-        return categoriaRepository.findById(id).orElse(null);
-    }
-
     public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }

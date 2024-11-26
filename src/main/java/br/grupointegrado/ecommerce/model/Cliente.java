@@ -1,7 +1,7 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Cliente {
@@ -9,13 +9,8 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String nome;
-
-    @OneToMany(mappedBy = "cliente")
-    private List<Pedido> pedidos;
-
-    @OneToOne(mappedBy = "cliente")
-    private Carrinho carrinho;
 
     public Long getId() {
         return id;
@@ -25,27 +20,11 @@ public class Cliente {
         this.id = id;
     }
 
-    public String getNome() {
+    public @NotNull String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NotNull String nome) {
         this.nome = nome;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public Carrinho getCarrinho() {
-        return carrinho;
-    }
-
-    public void setCarrinho(Carrinho carrinho) {
-        this.carrinho = carrinho;
     }
 }

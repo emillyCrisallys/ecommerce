@@ -15,11 +15,7 @@ public class PagamentoService {
     private PagamentoRepository pagamentoRepository;
 
     public List<Pagamento> findAll() {
-        return pagamentoRepository.findAll();
-    }
-
-    public Pagamento findById(Long id) {
-        return pagamentoRepository.findById(id).orElse(null);
+        return pagamentoRepository .findAll();
     }
 
     public Pagamento save(Pagamento pagamento) {

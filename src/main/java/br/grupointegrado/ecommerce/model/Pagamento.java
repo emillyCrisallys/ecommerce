@@ -1,6 +1,9 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 
 @Entity
 public class Pagamento {
@@ -8,15 +11,15 @@ public class Pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    private Double valor;
+    @NotNull
+    private BigDecimal valor;
 
+    @NotNull
     private String metodoPagamento;
-
-
 
     public Long getId() {
         return id;
@@ -34,19 +37,19 @@ public class Pagamento {
         this.pedido = pedido;
     }
 
-    public Double getValor() {
+    public @NotNull BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(@NotNull BigDecimal valor) {
         this.valor = valor;
     }
 
-    public String getMetodoPagamento() {
+    public @NotNull String getMetodoPagamento() {
         return metodoPagamento;
     }
 
-    public void setMetodoPagamento(String metodoPagamento) {
+    public void setMetodoPagamento(@NotNull String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
     }
 }

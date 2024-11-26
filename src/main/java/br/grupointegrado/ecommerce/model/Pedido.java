@@ -1,7 +1,7 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Pedido {
@@ -13,14 +13,7 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @OneToOne(mappedBy = "pedido")
-    private Pagamento pagamento;
-
-    @OneToOne(mappedBy = "pedido")
-    private Envio envio;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataPedido;
+    private LocalDateTime dataPedido;
 
     public Long getId() {
         return id;
@@ -38,29 +31,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    public Envio getEnvio() {
-        return envio;
-    }
-
-    public void setEnvio(Envio envio) {
-        this.envio = envio;
-    }
-
-    public Date getDataPedido() {
+    public LocalDateTime getDataPedido() {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(LocalDateTime dataPedido) {
         this.dataPedido = dataPedido;
     }
-
-
 }

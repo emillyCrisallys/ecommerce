@@ -16,10 +16,6 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public Pedido findById(Long id) {
-        return pedidoRepository.findById(id).orElse(null);
-    }
-
     public Pedido save(Pedido pedido) {
         return pedidoRepository.save(pedido);
     }
