@@ -1,32 +1,45 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Table
 public class Categoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @NotNull
     private String nome;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public @NotNull String getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNome(@NotNull String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        return Objects.equals(id, categoria.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
