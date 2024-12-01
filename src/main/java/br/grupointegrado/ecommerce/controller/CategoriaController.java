@@ -4,6 +4,7 @@ import br.grupointegrado.ecommerce.dto.CategoriaRequestDTO;
 import br.grupointegrado.ecommerce.model.Categoria;
 import br.grupointegrado.ecommerce.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,9 @@ public class CategoriaController {
     private CategoriaRepository repository;
 
     @GetMapping
-    public List<Categoria> findAll(){
-         return this.repository.findAll();
+    public ResponseEntity<List<Categoria>> findAll(){
+        List<Categoria> categoria = this.repository.findAll();
+        return ResponseEntity.ok(categoria);
     }
 
     @GetMapping("/{id}")
@@ -28,11 +30,28 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public Categoria save(@RequestBody CategoriaRequestDTO dto){
+    public ResponseEntity <Categoria> save(@RequestBody CategoriaRequestDTO dto){
+        if(dto.nome().isEmpty()){
+            return ResponseEntity.status(428).build();
+
+        }
         Categoria categoria = new Categoria();
         categoria.setNome(dto.nome());
 
-        return this.repository.save(categoria);
+        this.repository.save(categoria);
+        return ResponseEntity.ok(categoria);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        Categoria categoria = this.repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("A categoria não foi encontrada"));
+
+        this.repository.delete(categoria);
+
+        return ResponseEntity.noContent().build();
 
     }
 
