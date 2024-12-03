@@ -1,0 +1,4 @@
+CREATE TABLE cliente (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);

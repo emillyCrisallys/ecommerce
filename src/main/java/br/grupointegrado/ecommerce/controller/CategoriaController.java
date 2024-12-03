@@ -55,4 +55,20 @@ public class CategoriaController {
 
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Categoria> update(@PathVariable Integer id, @RequestBody CategoriaRequestDTO dto) {
+        if (dto.nome().isEmpty()) {
+            return ResponseEntity.status(428).build();
+        }
+
+        Categoria categoria = this.repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("A categoria não foi encontrada"));
+
+        categoria.setNome(dto.nome());
+
+        this.repository.save(categoria);
+        return ResponseEntity.ok(categoria);
+    }
+
 }

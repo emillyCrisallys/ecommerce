@@ -1,16 +1,19 @@
 package br.grupointegrado.ecommerce.model;
 
+
 import jakarta.persistence.*;
 
 @Entity
-@Table
-public class Categoria {
+@Table(name = "cliente")
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nome;
+
+
 
     public Integer getId() {
         return id;
@@ -27,6 +30,4 @@ public class Categoria {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
 }
