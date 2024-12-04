@@ -31,7 +31,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody ClienteRequestDTO dto) {
         if (dto.nome().isEmpty()) {
-            return ResponseEntity.status(400).body(null); // Nome não pode estar vazio
+            return ResponseEntity.status(400).body(null);
         }
 
         Cliente cliente = new Cliente();
@@ -46,7 +46,7 @@ public class ClienteController {
         Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 
         if (clienteOptional.isEmpty()) {
-            return ResponseEntity.status(404).build(); // Cliente não encontrado
+            return ResponseEntity.status(404).build();
         }
 
         Cliente cliente = clienteOptional.get();
@@ -61,10 +61,10 @@ public class ClienteController {
         Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 
         if (clienteOptional.isEmpty()) {
-            return ResponseEntity.status(404).build(); // Cliente não encontrado
+            return ResponseEntity.status(404).build();
         }
 
         clienteRepository.delete(clienteOptional.get());
-        return ResponseEntity.noContent().build(); // Sucesso na remoção
+        return ResponseEntity.noContent().build();
     }
 }

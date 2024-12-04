@@ -8,15 +8,14 @@ import java.util.Objects;
 @Embeddable
 public class CarrinhoPK implements Serializable {
 
-    private Integer clienteId;
-    private Integer produtoId;
-
+    private Integer cliente;
+    private Integer produto;
 
     public CarrinhoPK() {}
 
-    public CarrinhoPK(Integer clienteId, Integer produtoId) {
-        this.clienteId = clienteId;
-        this.produtoId = produtoId;
+    public CarrinhoPK(Integer cliente, Integer produto) {
+        this.cliente = cliente;
+        this.produto = produto;
     }
 
     @Override
@@ -24,11 +23,11 @@ public class CarrinhoPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarrinhoPK that = (CarrinhoPK) o;
-        return Objects.equals(clienteId, that.clienteId) && Objects.equals(produtoId, that.produtoId);
+        return Objects.equals(cliente, that.cliente) && Objects.equals(produto, that.produto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clienteId, produtoId);
+        return Objects.hash(cliente, produto);
     }
 }

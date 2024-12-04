@@ -2,7 +2,12 @@ package br.grupointegrado.ecommerce.controller;
 
 import br.grupointegrado.ecommerce.dto.CarrinhoRequestDTO;
 import br.grupointegrado.ecommerce.model.Carrinho;
+import br.grupointegrado.ecommerce.model.CarrinhoPK;
+import br.grupointegrado.ecommerce.model.Cliente;
+import br.grupointegrado.ecommerce.model.Produto;
 import br.grupointegrado.ecommerce.repository.CarrinhoRepository;
+import br.grupointegrado.ecommerce.repository.ClienteRepository;
+import br.grupointegrado.ecommerce.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,65 +15,70 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Carrinho")
+@RequestMapping("/carrinho")
 public class CarrinhoController {
 
     @Autowired
     private CarrinhoRepository repository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
     @GetMapping
-    public ResponseEntity<List<Carrinho>> findAll(){
-        List<Carrinho> Carrinho = this.repository.findAll();
-        return ResponseEntity.ok(Carrinho);
+    public ResponseEntity<List<Carrinho>> findAll() {
+        List<Carrinho> carrinhos = this.repository.findAll();
+        return ResponseEntity.ok(carrinhos);
     }
 
-    @GetMapping("/{clienteId}")
-    public Carrinho findByclienteId(@PathVariable Integer clienteId){
-        return this.repository.findByclienteId(clienteId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("A Carrinho não foi encontrada"));
+    @GetMapping("/{clienteId}/{produtoId}")
+    public ResponseEntity<Carrinho> findByIds(@PathVariable Integer clienteId, @PathVariable Integer produtoId) {
+        CarrinhoPK pk = new CarrinhoPK(clienteId, produtoId);
+        return this.repository.findById(pk)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    @PutMapping("/{clienteId}/{produtoId}")
+    public ResponseEntity<Carrinho> update(@PathVariable Integer clienteId, @PathVariable Integer produtoId, @RequestBody CarrinhoRequestDTO dto) {
+        CarrinhoPK pk = new CarrinhoPK(clienteId, produtoId);
+        return this.repository.findById(pk)
+                .map(existingCarrinho -> {
+                    existingCarrinho.setQuantidade(dto.quantidade());
+                    this.repository.save(existingCarrinho);
+                    return ResponseEntity.ok(existingCarrinho);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{clienteId}/{produtoId}")
+    public ResponseEntity<Object> delete(@PathVariable Integer clienteId, @PathVariable Integer produtoId) {
+        CarrinhoPK pk = new CarrinhoPK(clienteId, produtoId);
+        return this.repository.findById(pk)
+                .map(existingCarrinho -> {
+                    this.repository.delete(existingCarrinho);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity <Carrinho> save(@RequestBody CarrinhoRequestDTO dto){
-        if(dto.nome().isEmpty()){
-            return ResponseEntity.status(428).build();
+    public ResponseEntity<Carrinho> save(@RequestBody CarrinhoRequestDTO dto) {
+        Carrinho carrinho = new Carrinho();
 
-        }
-        Carrinho Carrinho = new Carrinho();
-        Carrinho.setNome(dto.nome());
+        Cliente cliente = clienteRepository.findById(dto.clienteId())
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Produto produto = produtoRepository.findById(dto.produtoId())
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        this.repository.save(Carrinho);
-        return ResponseEntity.ok(Carrinho);
+        carrinho.setCliente(cliente); // Alterado para usar a entidade Cliente
+        carrinho.setProduto(produto); // Alterado para usar a entidade Produto
+        carrinho.setQuantidade(dto.quantidade());
 
+        this.repository.save(carrinho);
+        return ResponseEntity.status(201).body(carrinho);
     }
-
-    @DeleteMapping("/{clienteId}")
-    public ResponseEntity<VoclienteId> delete(@PathVariable Integer clienteId){
-        Carrinho Carrinho = this.repository.findByclienteId(clienteId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("A Carrinho não foi encontrada"));
-
-        this.repository.delete(Carrinho);
-
-        return ResponseEntity.noContent().build();
-
-    }
-
-    @PutMapping("/{clienteId}")
-    public ResponseEntity<Carrinho> update(@PathVariable Integer clienteId, @RequestBody CarrinhoRequestDTO dto) {
-        if (dto.nome().isEmpty()) {
-            return ResponseEntity.status(428).build();
-        }
-
-        Carrinho Carrinho = this.repository.findByclienteId(clienteId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("A Carrinho não foi encontrada"));
-
-        Carrinho.setNome(dto.nome());
-
-        this.repository.save(Carrinho);
-        return ResponseEntity.ok(Carrinho);
-    }
-
 }
