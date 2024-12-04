@@ -24,7 +24,7 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<Pedido> create(@RequestBody PedidoRequestDTO dto) {
-        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+        Cliente cliente = clienteRepository.findById(dto.clienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
         Pedido pedido = new Pedido();
@@ -52,11 +52,11 @@ public class PedidoController {
     public ResponseEntity<Pedido> update(@PathVariable Integer id, @RequestBody PedidoRequestDTO dto) {
         return pedidoRepository.findById(id)
                 .map(existingPedido -> {
-                    Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                    Cliente cliente = clienteRepository.findById(dto.clienteId())
                             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
                     existingPedido.setCliente(cliente);
-                    existingPedido.setDataPedido(LocalDateTime.now()); // Atualiza a data do pedido
+                    existingPedido.setDataPedido(LocalDateTime.now());
 
                     Pedido updatedPedido = pedidoRepository.save(existingPedido);
                     return ResponseEntity.ok(updatedPedido);
