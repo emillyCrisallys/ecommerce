@@ -1,7 +1,6 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,16 +15,13 @@ public class ProdutoAuditoria {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "valor_antigo")
+    @Column(name = "valor_antigo")
     private Double valorAntigo;
 
-    @ManyToOne
-    @JoinColumn(name = "valor_novo")
+    @Column(name = "valor_novo")
     private Double valorNovo;
 
-    @ManyToOne
-    @JoinColumn(name = "data_alteracao")
+    @Column(name = "data_alteracao")
     private LocalDateTime dataAlteracao;
 
     public Integer getId() {

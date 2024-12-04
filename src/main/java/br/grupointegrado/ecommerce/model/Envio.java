@@ -14,14 +14,13 @@ public class Envio {
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    @ManyToOne
-    @JoinColumn(name = "endereco_entrega")
+
+    @Column(name = "endereco_entrega")
     private String enderecoEntrega;
 
-    @ManyToOne
-    @JoinColumn(name = "status_entrega")
-    private String statusEntrega;
 
+    @Column(name = "status_entrega")
+    private String statusEntrega;
 
     public Integer getId() {
         return id;

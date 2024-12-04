@@ -2,7 +2,6 @@ package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
@@ -15,12 +14,11 @@ public class Pagamento {
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    private Double valor;
-
     @ManyToOne
-    @JoinColumn(name = "metodo_pagamento ")
-    private String metodoPagamento;
+    @JoinColumn(name = "metodo_pagamento_id")
+    private MetodoPagamento metodoPagamento;
 
+    private Double valor;
 
     public Integer getId() {
         return id;
@@ -38,19 +36,19 @@ public class Pagamento {
         this.pedido = pedido;
     }
 
+    public MetodoPagamento getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(MetodoPagamento metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
+    }
+
     public Double getValor() {
         return valor;
     }
 
     public void setValor(Double valor) {
         this.valor = valor;
-    }
-
-    public String getMetodoPagamento() {
-        return metodoPagamento;
-    }
-
-    public void setMetodoPagamento(String metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
     }
 }

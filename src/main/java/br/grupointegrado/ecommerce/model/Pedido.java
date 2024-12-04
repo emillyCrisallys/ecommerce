@@ -1,7 +1,6 @@
 package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,9 +12,12 @@ public class Pedido {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
+
 
     public Integer getId() {
         return id;
