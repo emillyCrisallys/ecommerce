@@ -1,4 +1,4 @@
-package br.grupointegrado.ecommerce.controller;
+/*package br.grupointegrado.ecommerce.controller;
 
 import br.grupointegrado.ecommerce.dto.PagamentoRequestDTO;
 import br.grupointegrado.ecommerce.model.MetodoPagamento;
@@ -47,7 +47,12 @@ public class PagamentoController {
 
         Pedido pedido = new Pedido();
 
-                Pagamento pagamento = new Pagamento();
+                Pagamento pagamento = new Pagamento() {
+                    @Override
+                    public void pagar(Double valor) {
+
+                    }
+                };
         pagamento.setPedido(pedido);
         pagamento.setMetodoPagamento(metodoPagamento);
         pagamento.setValor(dto.valor());
@@ -86,4 +91,4 @@ public class PagamentoController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-}
+}*/

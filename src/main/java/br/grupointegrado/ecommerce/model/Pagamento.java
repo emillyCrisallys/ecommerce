@@ -1,10 +1,13 @@
+/*
 package br.grupointegrado.ecommerce.model;
 
+import br.grupointegrado.ecommerce.repository.Pagavel;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "pagamento")
-public class Pagamento {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Pagamento implements Pagavel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +54,6 @@ public class Pagamento {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-}
+
+
+}*/

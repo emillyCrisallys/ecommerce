@@ -1,4 +1,4 @@
-package br.grupointegrado.ecommerce.repository;
+/*package br.grupointegrado.ecommerce.repository;
 
 import br.grupointegrado.ecommerce.model.Pagamento;
 import br.grupointegrado.ecommerce.model.MetodoPagamento;
@@ -15,4 +15,4 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
 
     List<Pagamento> findByMetodoPagamento(MetodoPagamento metodoPagamento);
 
-}
+}*/
