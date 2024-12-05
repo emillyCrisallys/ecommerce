@@ -2,6 +2,8 @@ package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "fornecedor")
 public class Fornecedor {
@@ -11,6 +13,9 @@ public class Fornecedor {
     private Integer id;
 
     private String nome;
+
+    @OneToMany(mappedBy = "fornecedor")
+    private List<ProdutoFornecedor> produtoFornecedores;
 
     public Integer getId() {
         return id;
@@ -27,4 +32,14 @@ public class Fornecedor {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public List<ProdutoFornecedor> getProdutoFornecedores() {
+        return produtoFornecedores;
+    }
+
+    public void setProdutoFornecedores(List<ProdutoFornecedor> produtoFornecedores) {
+        this.produtoFornecedores = produtoFornecedores;
+    }
+
+
 }

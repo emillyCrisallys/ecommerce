@@ -29,7 +29,7 @@ public class PedidoController {
 
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
-        pedido.setDataPedido(LocalDateTime.now()); // Define a data do pedido
+        pedido.setDataPedido(LocalDateTime.now());
 
         Pedido savedPedido = pedidoRepository.save(pedido);
         return ResponseEntity.status(201).body(savedPedido);

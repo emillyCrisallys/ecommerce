@@ -2,6 +2,8 @@ package br.grupointegrado.ecommerce.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table
 public class Categoria {
@@ -11,6 +13,8 @@ public class Categoria {
     private Integer id;
 
     private String nome;
+
+
 
     public Integer getId() {
         return id;
